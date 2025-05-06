@@ -24,6 +24,30 @@ else
     echo "Homebrew is already installed."
 fi
 
+# Check if UV is installed
+if ! command -v uv &> /dev/null; then
+
+    # Prompt the user to install UV (defaults to "yes")
+    read -p "UV is required but not installed. Do you want to install it now? (Y/n): " gh_choice
+    uv_choice=${uv_choice:-Y}
+    if [[ "$uv_choice" == "y" || "$uv_choice" == "Y" ]]; then
+        
+        # Install UV using Homebrew
+        brew install uv
+
+        # Confirm the installation
+        if ! command -v uv &> /dev/null; then
+            echo "Error: UV installation failed."
+            exit 1
+        fi
+    else
+        echo "UV is required. Please install it manually."
+        exit 1
+    fi
+else    
+    echo "UV is already installed."
+fi
+
 # Check if the GitHub CLI is installed
 if ! command -v gh &> /dev/null; then
 

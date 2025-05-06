@@ -2,6 +2,11 @@
 
 USAGE="Usage: $0 [-k|--keychain <keychain-name>] [-l|--logout]"
 
+if [[ "$1" == "--help" ]]; then
+    echo $USAGE
+    exit 0
+fi
+
 LOGOUT=false
 while [[ "$#" -gt 0 ]]; do
     case $1 in
