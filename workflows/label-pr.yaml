@@ -10,8 +10,10 @@ on:
       - opened
       - reopened
     paths:
-      - src/**
-      - pyproject.toml
+      - wool/src/**
+      - wool/pyproject.toml
+      - wool-locking/src/**
+      - wool-locking/pyproject.toml
     
 jobs:
   add-code-change-label:
@@ -24,9 +26,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - uses: ./.github/actions/get-wool-labs-app-token
+        id: get-wool-labs-app-token
+        with:
+          app-id: ${{ secrets.WOOL_LABS_APP_ID }}
+          app-installation-id: ${{ secrets.WOOL_LABS_INSTALLATION_ID }}
+          app-private-key: ${{ secrets.WOOL_LABS_PRIVATE_KEY }}
       - name: Add label
         env:
-          GH_TOKEN: ${{ secrets.MY_TOKEN }}
+          GH_TOKEN: ${{ steps.get-wool-labs-app-token.outputs.access-token }}
         uses: ./.github/actions/add-label
         with:
           label: code-change
@@ -41,9 +49,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - uses: ./.github/actions/get-wool-labs-app-token
+        id: get-wool-labs-app-token
+        with:
+          app-id: ${{ secrets.WOOL_LABS_APP_ID }}
+          app-installation-id: ${{ secrets.WOOL_LABS_INSTALLATION_ID }}
+          app-private-key: ${{ secrets.WOOL_LABS_PRIVATE_KEY }}
       - name: Add label
         env:
-          GH_TOKEN: ${{ secrets.MY_TOKEN }}
+          GH_TOKEN: ${{ steps.get-wool-labs-app-token.outputs.access-token }}
         uses: ./.github/actions/add-label
         with:
           label: release

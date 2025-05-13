@@ -20,7 +20,7 @@ done
 if [[ ! $(gh auth status) ]]; then
     gh auth login
 fi
-for KEY in "pypi-token" "my-token"; do
+for KEY in "pypi-token" "wool-labs-app-id" "wool-labs-installation-id" "wool-labs-private-key"; do
     if [[ -n "$KEYCHAIN" && -n $(ks -k $KEYCHAIN ls | grep "\b$KEY\b") ]]; then
         echo "Using $KEY from keychain"
         SECRET=$(ks -k $KEYCHAIN show $KEY)
